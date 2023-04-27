@@ -1,0 +1,35 @@
+POST http://localhost:3001/api/blogs
+Content-Type: application/json
+Authorization: Bearer <token>
+
+ {
+ "title": "Test Title",
+ "author": "HD Dev8",
+ "url": "https://www.github.com/hddev8",
+ "likes": 08
+ }
+
+
+###
+GET http://localhost:3001/api/blogs
+
+###
+GET http://localhost:3001/api/blogs/blogid
+
+###
+DELETE http://localhost:3001/api/blogs/blogid
+Content-Type: application/json
+Authorization: Bearer <token>
+
+###
+PUT http://localhost:3001/api/blogs/blogid
+Content-Type: application/json
+Authorization: Bearer <token>
+
+{
+    "title": "another test",
+    "author": "HD Dev8",
+    "url": "https://www.github.com/hddev8",
+    "likes": 100,
+    "user": "<user.id>"
+}

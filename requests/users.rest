@@ -1,0 +1,29 @@
+POST http://localhost:3001/api/users HTTP/1.1
+content-type: application/json
+Authorization: Bearer <token>
+
+{
+    "username": "hddev8",
+    "name": "hd dev8",
+    "password": "password"
+}
+
+###
+GET http://localhost:3001/api/users
+
+###
+GET http://localhost:3001/api/users/userid
+
+###
+PUT http://localhost:3001/api/users/userid HTTP/1.1
+content-type: application/json
+Authorization: Bearer <token>
+
+{
+    "username": "hddev8",
+    "name": "Mr. HD Dev8",
+    "password": "password"
+}
+
+###
+DELETE http://localhost:3001/api/users/userid
