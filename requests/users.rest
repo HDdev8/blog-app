@@ -3,8 +3,8 @@ content-type: application/json
 Authorization: Bearer <token>
 
 {
-    "username": "hddev8",
-    "name": "hd dev8",
+    "username": "username",
+    "name": "name",
     "password": "password"
 }
 
@@ -20,8 +20,8 @@ content-type: application/json
 Authorization: Bearer <token>
 
 {
-    "username": "hddev8",
-    "name": "Mr. HD Dev8",
+    "username": "username",
+    "name": "name",
     "password": "password"
 }
 

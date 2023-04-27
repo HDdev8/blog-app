@@ -1,6 +1,5 @@
 const blogsRouter = require("express").Router();
 const Blog = require("../models/blog");
-
 blogsRouter.post("/", async (req, res) => {
 	const body = req.body;
 	const user = req.user;
