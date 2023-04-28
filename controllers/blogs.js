@@ -51,11 +51,16 @@ blogsRouter.put("/:id", async (req, res) => {
 
 blogsRouter.delete("/:id", async (req, res) => {
 	const user = req.user;
-	const deletedBlog = await Blog.findByIdAndRemove(req.params.id);
-	const blogId = deletedBlog._id;
-	user.blogs.pull(blogId);
-	await user.save();
-	res.status(204).end();
+	const blog = await Blog.findById(req.params.id);
+	if (user.username === blog.author) {
+		const deletedBlog = await Blog.findByIdAndRemove(req.params.id);
+		const blogId = deletedBlog._id;
+		user.blogs.pull(blogId);
+		await user.save();
+		res.status(204).end();
+	} else {
+		res.status(401).end();
+	}
 });
 
 module.exports = blogsRouter;
