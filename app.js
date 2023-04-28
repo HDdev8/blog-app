@@ -1,14 +1,13 @@
-const config = require("./utils/config");
 const express = require("express");
-const helmet = require("helmet");
+const mongoose = require("mongoose");
+const config = require("./utils/config");
 const app = express();
 const cors = require("cors");
+const helmet = require("helmet");
 const logger = require("./utils/logger");
-const mongoose = require("mongoose");
 require("express-async-errors");
 
 const middleware = require("./utils/middleware");
-const homeRouter = require("./controllers/home");
 const blogsRouter = require("./controllers/blogs");
 const usersRouter = require("./controllers/users");
 const loginRouter = require("./controllers/login");
@@ -35,7 +34,6 @@ app.use(middleware.requestTime);
 app.use(middleware.requestLogger);
 app.use(middleware.tokenExtractor);
 
-app.use("/", homeRouter);
 app.use("/api/blogs", middleware.userExtractor, blogsRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/login", loginRouter);

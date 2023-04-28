@@ -1,20 +1,5 @@
 const blogsRouter = require("express").Router();
 const Blog = require("../models/blog");
-blogsRouter.post("/", async (req, res) => {
-	const body = req.body;
-	const user = req.user;
-	const blog = new Blog({
-		title: body.title,
-		author: user.username,
-		url: `api/blogs/${body.title.replaceAll(" ", "")}`,
-		likes: body.likes,
-		user: user._id,
-	});
-	const savedBlog = await blog.save();
-	user.blogs = user.blogs.concat(savedBlog._id);
-	await user.save();
-	res.json(savedBlog);
-});
 
 blogsRouter.get("/", async (req, res) => {
 	const blogs = await Blog.find({}).populate("user", {username: 1, name: 1});
@@ -30,11 +15,25 @@ blogsRouter.get("/:id", async (req, res) => {
 	}
 });
 
-blogsRouter.put("/:id", async (req, res) => {
+blogsRouter.post("/", async (req, res) => {
 	const body = req.body;
 	const user = req.user;
-	const blog = await Blog.findById(req.params.id);
+	const blog = new Blog({
+		title: body.title,
+		author: user.username,
+		url: `/api/blogs/${body.title.replaceAll(" ", "")}`,
+		likes: 0,
+		user: user._id,
+	});
+	const savedBlog = await blog.save();
+	user.blogs = user.blogs.concat(savedBlog._id);
+	await user.save();
+	res.json(savedBlog);
+});
 
+blogsRouter.put("/:id", async (req, res) => {
+	const body = req.body;
+	const blog = await Blog.findById(req.params.id);
 	const blogObject = {
 		title: blog.title,
 		author: blog.author,
@@ -47,13 +46,15 @@ blogsRouter.put("/:id", async (req, res) => {
 		runValidators: true,
 		context: "query",
 	});
-	user.blogs = user.blogs.concat(updatedBlog._id);
-	await user.save();
 	res.json(updatedBlog);
 });
 
 blogsRouter.delete("/:id", async (req, res) => {
-	await Blog.findByIdAndRemove(req.params.id);
+	const user = req.user;
+	const deletedBlog = await Blog.findByIdAndRemove(req.params.id);
+	const blogId = deletedBlog._id;
+	user.blogs.pull(blogId);
+	await user.save();
 	res.status(204).end();
 });
 

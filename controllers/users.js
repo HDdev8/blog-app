@@ -1,8 +1,7 @@
-// const config = require("../utils/config");
-// const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const usersRouter = require("express").Router();
 const User = require("../models/user");
+const jwt = require("jsonwebtoken");
 
 usersRouter.get("/", async (req, res) => {
 	const users = await User.find({});
@@ -20,22 +19,39 @@ usersRouter.get("/:id", async (req, res) => {
 });
 
 usersRouter.post("/", async (req, res) => {
-	const user = req.body;
-
+	const {username, name, password} = req.body;
 	const saltRounds = 10;
-	if (user.password.length < 3) {
-		return res.status(401).json({error: "password invalid"});
-	} else if (user.password.length >= 3) {
-		const passwordHash = await bcrypt.hash(user.password, saltRounds);
-		user.password = passwordHash;
-
-		const newUser = new User(user);
-		const savedUser = await newUser.save();
-		res.status(201).json(savedUser);
-	}
+	const passwordHash = await bcrypt.hash(password, saltRounds);
+	const user = new User({
+		username,
+		name,
+		passwordHash,
+	});
+	const savedUser = await user.save();
+	res.status(201).json(savedUser);
 });
 
-// usersRouter.put("/:id", async (req, res) => {});
+usersRouter.put("/:id", async (req, res) => {
+	const body = req.body;
+	const decodedToken = jwt.verify(req.token, process.env.SECRET);
+
+	if (!decodedToken.id) {
+		return res.status(401).json({error: "token invalid"});
+	} else if (decodedToken.id) {
+		const user = await User.findById(decodedToken.id);
+		const userObject = {
+			username: user.username,
+			name: body.name,
+			passwordHash: user.passwordHash,
+		};
+		const updatedUser = await User.findByIdAndUpdate(req.params.id, userObject, {
+			new: true,
+			runValidators: true,
+			context: "query",
+		});
+		res.json(updatedUser);
+	}
+});
 
 usersRouter.delete("/:id", async (req, res) => {
 	await User.findByIdAndRemove(req.params.id);

@@ -1,3 +1,9 @@
+GET http://localhost:3001/api/users
+
+###
+GET http://localhost:3001/api/users/id
+
+###
 POST http://localhost:3001/api/users HTTP/1.1
 content-type: application/json
 Authorization: Bearer <token>
@@ -9,13 +15,7 @@ Authorization: Bearer <token>
 }
 
 ###
-GET http://localhost:3001/api/users
-
-###
-GET http://localhost:3001/api/users/userid
-
-###
-PUT http://localhost:3001/api/users/userid HTTP/1.1
+PUT http://localhost:3001/api/users/id HTTP/1.1
 content-type: application/json
 Authorization: Bearer <token>
 
@@ -26,4 +26,4 @@ Authorization: Bearer <token>
 }
 
 ###
-DELETE http://localhost:3001/api/users/userid
+DELETE http://localhost:3001/api/users/id

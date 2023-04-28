@@ -3,6 +3,7 @@ content-type: application/json
 Authorization: Bearer <token>
 
 {
-  "username": "username",
-  "password": "password"
+    "username": "username",
+    "name": "name",
+    "password": "password"
 }

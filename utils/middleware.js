@@ -12,12 +12,10 @@ const tokenExtractor = async (req, res, next) => {
 
 const userExtractor = async (req, res, next) => {
 	if (req.method === "POST" || req.method === "PUT" || req.method === "DELETE") {
-		const authToken = req.token;
-		const decodedToken = jwt.verify(authToken, process.env.SECRET);
-
+		const decodedToken = jwt.verify(req.token, process.env.SECRET);
 		if (decodedToken.id) {
-			const username = decodedToken.username;
-			req.user = await User.findOne({username});
+			const user = await User.findById(decodedToken.id);
+			req.user = user;
 		}
 	}
 	next();
