@@ -18,13 +18,17 @@ blogsRouter.get("/:id", async (req, res) => {
 blogsRouter.post("/", async (req, res) => {
 	const body = req.body;
 	const user = req.user;
+	const {title} = body;
+	const urlTitle = title.replaceAll(" ", "-");
+
 	const blog = new Blog({
 		title: body.title,
 		author: user.username,
-		url: `/api/blogs/${body.title.replaceAll(" ", "-")}`,
+		url: `/api/blogs/${urlTitle}`,
 		likes: body.likes,
 		user: user._id,
 	});
+
 	const savedBlog = await blog.save();
 	user.blogs = user.blogs.concat(savedBlog._id);
 	await user.save();
