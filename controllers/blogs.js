@@ -21,8 +21,8 @@ blogsRouter.post("/", async (req, res) => {
 	const blog = new Blog({
 		title: body.title,
 		author: user.username,
-		url: `/api/blogs/${body.title.replaceAll(" ", "")}`,
-		likes: 0,
+		url: `/api/blogs/${body.title.replaceAll(" ", "-")}`,
+		likes: body.likes,
 		user: user._id,
 	});
 	const savedBlog = await blog.save();
