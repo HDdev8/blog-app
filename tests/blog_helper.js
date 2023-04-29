@@ -28,13 +28,35 @@ const listWithTwoBlogs = [
 	},
 ];
 
-const blogs = [
+const testBlog1 = {
+	title: "Another Test",
+	author: "hddev8",
+	url: "/api/blogs/Another-Test",
+	likes: 26,
+	user: {
+		username: "hddev8",
+		name: "HD Dev8",
+		id: "644c3deb145da742e7aaad4e",
+	},
+	id: "644c60cb8ea86d46037c4a23",
+};
+
+const testBlog2 = {
+	title: "Another Test",
+	author: "hddev8",
+	url: "/api/blogs/Another-Test",
+	likes: 26,
+	user: "644c60cb8ea86d46037c4a23",
+};
+
+const blogs1 = [
 	{
 		_id: "5a422a851b54a676234d17f7",
 		title: "React patterns",
 		author: "Michael Chan",
 		url: "https://reactpatterns.com/",
 		likes: 7,
+		user: "644cb113a96739b67aa4474e",
 		__v: 0,
 	},
 	{
@@ -43,6 +65,7 @@ const blogs = [
 		author: "Edsger W. Dijkstra",
 		url: "http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html",
 		likes: 5,
+		user: "644cb113a96739b67aa4474e",
 		__v: 0,
 	},
 	{
@@ -51,30 +74,36 @@ const blogs = [
 		author: "Edsger W. Dijkstra",
 		url: "http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html",
 		likes: 12,
+		user: "644cb113a96739b67aa4474e",
+		__v: 0,
+	},
+];
+const blogs2 = [
+	{
+		_id: "5a422a851b54a676234d17f7",
+		title: "React patterns",
+		author: "Michael Chan",
+		url: "https://reactpatterns.com/",
+		likes: 7,
+		user: "644cb226d0d3588400e46a60",
 		__v: 0,
 	},
 	{
-		_id: "5a422b891b54a676234d17fa",
-		title: "First class tests",
-		author: "Robert C. Martin",
-		url: "http://blog.cleancoder.com/uncle-bob/2017/05/05/TestDefinitions.htmll",
-		likes: 10,
+		_id: "5a422aa71b54a676234d17f8",
+		title: "Go To Statement Considered Harmful",
+		author: "Edsger W. Dijkstra",
+		url: "http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html",
+		likes: 5,
+		user: "644cb226d0d3588400e46a60",
 		__v: 0,
 	},
 	{
-		_id: "5a422ba71b54a676234d17fb",
-		title: "TDD harms architecture",
-		author: "Robert C. Martin",
-		url: "http://blog.cleancoder.com/uncle-bob/2017/03/03/TDD-Harms-Architecture.html",
-		likes: 0,
-		__v: 0,
-	},
-	{
-		_id: "5a422bc61b54a676234d17fc",
-		title: "Type wars",
-		author: "Robert C. Martin",
-		url: "http://blog.cleancoder.com/uncle-bob/2016/05/01/TypeWars.html",
-		likes: 2,
+		_id: "5a422b3a1b54a676234d17f9",
+		title: "Canonical string reduction",
+		author: "Edsger W. Dijkstra",
+		url: "http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html",
+		likes: 12,
+		user: "644cb226d0d3588400e46a60",
 		__v: 0,
 	},
 ];
@@ -122,7 +151,8 @@ const mostLikes = (blogList) => {
 };
 
 module.exports = {
-	blogs,
+	blogs1,
+	blogs2,
 	dummy,
 	totalLikes,
 	favoriteBlog,
